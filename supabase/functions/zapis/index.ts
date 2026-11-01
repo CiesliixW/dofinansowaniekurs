@@ -1,11 +1,13 @@
 // Zapis z landingu: sprawdza captchę (Cloudflare Turnstile), zapisuje imię, e-mail i zgody,
-// wysyła maila z PDF-em w załączniku i podpisanym linkiem (Resend).
+// wysyła maila z PDF-em w załączniku i podpisanym linkiem (Gmail SMTP, hasło do aplikacji).
 //
-// Sekrety (supabase secrets set ...): TURNSTILE_SECRET, RESEND_API_KEY, MAIL_FROM, MAIL_REPLY_TO, ALLOWED_ORIGINS.
+// Sekrety (supabase secrets set ...): TURNSTILE_SECRET, GMAIL_USER, GMAIL_APP_PASSWORD, ALLOWED_ORIGINS,
+// opcjonalnie MAIL_FROM_NAME (domyślnie „Wojciech”) i MAIL_REPLY_TO.
 // SUPABASE_URL i SUPABASE_SERVICE_ROLE_KEY Supabase wstrzykuje sam.
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
-import { encodeBase64 } from "jsr:@std/encoding@1/base64";
+import { Buffer } from "node:buffer";
+import nodemailer from "npm:nodemailer@6.9.16";
 
 // Treści zgód muszą się zgadzać z checkboxami na stronie. Zmieniasz tekst – podbij wersję tu i w index.html.
 const ZGODY: Record<string, { regulamin: string; marketing: string }> = {
@@ -20,6 +22,15 @@ const ZGODY: Record<string, { regulamin: string; marketing: string }> = {
 const LINK_WAZNY_S = 60 * 60 * 24 * 30;
 const LIMIT_IP_NA_GODZINE = 5;
 const PONOWNA_WYSYLKA_PO_MIN = 10;
+
+// Supabase blokuje wychodzące porty 25 i 587, więc Gmail przez 465 (TLS od początku połączenia).
+const GMAIL_USER = Deno.env.get("GMAIL_USER") ?? "";
+const poczta = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: { user: GMAIL_USER, pass: (Deno.env.get("GMAIL_APP_PASSWORD") ?? "").replace(/\s/g, "") },
+});
 
 const dozwolone = (Deno.env.get("ALLOWED_ORIGINS") ?? "")
   .split(",").map((s) => s.trim()).filter(Boolean);
@@ -167,31 +178,23 @@ Deno.serve(async (req) => {
       .replaceAll("{{imie}}", escapeHtml(imie))
       .replaceAll("{{link}}", escapeHtml(link.signedUrl));
 
-    const r = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: Deno.env.get("MAIL_FROM"),
-        to: [email],
-        reply_to: Deno.env.get("MAIL_REPLY_TO") || undefined,
-        subject: mat.temat_maila,
-        html,
-        attachments: [{
-          filename: mat.nazwa_zalacznika,
-          content: encodeBase64(new Uint8Array(await pdf.arrayBuffer())),
-        }],
-      }),
+    const wynik = await poczta.sendMail({
+      from: { name: Deno.env.get("MAIL_FROM_NAME") || "Wojciech", address: GMAIL_USER },
+      to: email,
+      replyTo: Deno.env.get("MAIL_REPLY_TO") || undefined,
+      subject: mat.temat_maila,
+      html,
+      attachments: [{
+        filename: mat.nazwa_zalacznika,
+        content: Buffer.from(await pdf.arrayBuffer()),
+        contentType: "application/pdf",
+      }],
     });
-    const wynik = await r.json();
-    if (!r.ok) throw new Error(`resend ${r.status}: ${JSON.stringify(wynik)}`);
 
     await db.from("zapisy").update({
       status_maila: "wyslany",
       wyslano_mail: new Date().toISOString(),
-      id_maila: wynik.id,
+      id_maila: wynik.messageId,
       blad_maila: null,
     }).eq("id", zapis.id);
     return odpowiedz(origin, 200, { ok: true });

@@ -28,7 +28,7 @@ create table public.zapisy (
                  check (status_maila in ('oczekuje', 'wyslany', 'blad', 'czeka_na_pdf')),
   wyslano_mail   timestamptz,
   blad_maila     text,
-  id_maila       text,                             -- id wiadomości w Resend
+  id_maila       text,                             -- Message-ID wysłanego maila
   unique (email, material)
 );
 

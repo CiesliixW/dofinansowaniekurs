@@ -58,9 +58,13 @@ function escapeHtml(s: string) {
   );
 }
 
+// Bez sekretu TURNSTILE_SECRET captcha jest wyłączona (zostaje pułapka na boty i limit na IP).
+const TURNSTILE_SECRET = Deno.env.get("TURNSTILE_SECRET") ?? "";
+
 async function sprawdzCaptche(token: string, ip: string | null) {
+  if (!TURNSTILE_SECRET) return true;
   const form = new FormData();
-  form.append("secret", Deno.env.get("TURNSTILE_SECRET") ?? "");
+  form.append("secret", TURNSTILE_SECRET);
   form.append("response", token);
   if (ip) form.append("remoteip", ip);
   const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
@@ -105,7 +109,7 @@ Deno.serve(async (req) => {
   if (dane.regulamin !== true) return odpowiedz(origin, 400, { blad: "regulamin" });
   const zgody = ZGODY[wersja];
   if (!zgody) return odpowiedz(origin, 400, { blad: "wersja_zgod" });
-  if (!token) return odpowiedz(origin, 400, { blad: "captcha" });
+  if (TURNSTILE_SECRET && !token) return odpowiedz(origin, 400, { blad: "captcha" });
 
   const ip = req.headers.get("cf-connecting-ip") ??
     req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? null;

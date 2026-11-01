@@ -61,7 +61,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 .zgoda a { color: var(--chmura); text-decoration: underline; text-underline-offset: 2px; }
 .zgoda .opc { color: var(--mgla-ciemna); }
 .pulapka { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
-#captcha { min-height: 65px; }
+#captcha:not(:empty) { min-height: 65px; }
 .przycisk { font-family: "Anton", Impact, sans-serif; font-size: 22px; letter-spacing: .03em; text-transform: uppercase;
   color: var(--polnoc); background: var(--blekit); border: 0; border-radius: 6px; padding: 16px 20px; cursor: pointer;
   transition: filter .15s, transform .1s; text-decoration: none; display: inline-block; text-align: center; }
@@ -107,7 +107,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 .historia .wewn { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 88px);
   align-items: center; }
 .historia figure { margin: 0; position: relative; }
-.historia figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 62%; border-radius: 4px; }
+.historia figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 50%; border-radius: 4px; }
 .historia .ety { color: var(--mgla-ciemna); }
 .historia h2 { font-size: clamp(40px, 5vw, 64px); margin-top: 12px; }
 .historia .liczba { font-family: "Anton", Impact, sans-serif; font-size: clamp(64px, 9vw, 128px); line-height: .9;
@@ -159,3 +159,21 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   .przycisk { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ── Program: strona z linku na końcu PDF-a ── */
+.program { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; }
+.program-kadr { position: absolute; inset: 0; }
+.program-kadr img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 40%; }
+.program-kadr::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(2, 7, 10, .6) 0%, rgba(2, 7, 10, .35) 25%, rgba(2, 7, 10, .9) 55%, var(--polnoc) 80%); }
+.program-in { position: relative; padding-top: 120px; padding-bottom: clamp(40px, 8vh, 80px); }
+.powrot { position: absolute; top: 28px; color: rgba(241, 245, 248, .86); text-decoration: none; }
+.program h1 { font-size: clamp(48px, 8vw, 112px); line-height: .95; max-width: 12ch; }
+.program .pod { margin-top: 18px; max-width: 56ch; font-size: clamp(16px, 1.5vw, 19px); color: rgba(241, 245, 248, .92); }
+.trzy { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 12px; }
+.trzy li { display: grid; grid-template-columns: 44px 1fr; align-items: baseline; font-size: clamp(17px, 1.6vw, 20px); }
+.trzy .anton { font-size: 32px; color: var(--kantalupa); }
+.przyciski { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.przyciski .przycisk { padding: 16px 32px; }
+.przycisk.drugi { background: transparent; color: var(--chmura); box-shadow: inset 0 0 0 1.5px rgba(241, 245, 248, .5); }
+.program .drobny { margin-top: 28px; max-width: 70ch; }

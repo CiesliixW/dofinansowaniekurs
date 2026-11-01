@@ -18,6 +18,15 @@
     siec: "Brak połączenia z serwerem. Sprawdź internet i spróbuj ponownie.",
   };
 
+  // Captcha tylko gdy jest klucz w config.js; skrypt Cloudflare ładujemy dopiero wtedy.
+  const zCaptcha = Boolean(K.turnstileSiteKey);
+  if (zCaptcha) {
+    const s = document.createElement("script");
+    s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=captchaGotowa";
+    s.async = true;
+    document.head.appendChild(s);
+  }
+
   window.captchaGotowa = function () {
     widget = window.turnstile.render("#captcha", {
       sitekey: K.turnstileSiteKey,
@@ -57,7 +66,7 @@
     if (!imie) return pokazBlad("imie", form.imie);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return pokazBlad("email", form.email);
     if (!form.regulamin.checked) return pokazBlad("regulamin", form.regulamin);
-    if (!token) return pokazBlad("captcha");
+    if (zCaptcha && !token) return pokazBlad("captcha");
 
     przycisk.disabled = true;
     przycisk.textContent = "Wysyłam…";

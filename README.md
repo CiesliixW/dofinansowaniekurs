@@ -29,7 +29,7 @@ Tabele mają włączone RLS bez polityk: z przeglądarki nikt ich nie przeczyta,
 npx supabase login
 npx supabase link --project-ref untuvgcvibefcdfoseat
 npx supabase db push
-npx supabase secrets set TURNSTILE_SECRET=... GMAIL_USER=adres@gmail.com GMAIL_APP_PASSWORD=... \
+npx supabase secrets set GMAIL_USER=adres@gmail.com GMAIL_APP_PASSWORD=... \
   ALLOWED_ORIGINS=https://ciesliixw.github.io,http://localhost:4321
 npx supabase functions deploy zapis --no-verify-jwt --use-api
 ```
@@ -43,3 +43,13 @@ Zmieniasz – dodaj nową wersję (`v2`) w funkcji i ustaw `wersjaZgod` w `asset
 
 Hasło do aplikacji: myaccount.google.com/apppasswords (konto musi mieć weryfikację dwuetapową).
 Mail wychodzi z adresu `GMAIL_USER`; nazwę nadawcy zmienia sekret `MAIL_FROM_NAME`.
+
+## Captcha (obecnie wyłączona)
+
+Chronią pułapka na boty i limit 5 zapisów/h z IP. Włączenie Cloudflare Turnstile: klucz strony w `assets/config.js`
+(`turnstileSiteKey`), sekret w Supabase (`TURNSTILE_SECRET`), i wróć Cloudflare do polityki prywatności.
+
+## Strona `/program/`
+
+Link z ostatniej strony PDF-a: https://ciesliixw.github.io/dofinansowaniekurs/program/?utm_source=pdf
+Na razie kontakt (mail, IG); docelowo zgłoszenie do płatnego programu.

@@ -1,0 +1,6 @@
+# Projekt Supabase: untuvgcvibefcdfoseat. Wdrożenie: zob. README.md.
+project_id = "untuvgcvibefcdfoseat"
+
+# Strona wysyła klucz publishable (nie JWT), więc bramka nie sprawdza tokena; funkcja broni się captchą i limitem.
+[functions.zapis]
+verify_jwt = false

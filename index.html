@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jak ogarnąć kasę z Unii na wymarzony kurs – darmowy PDF</title>
+<meta name="description" content="Do 75 000 zł na kurs, który i tak chcesz zrobić. 25–50% pokrywa program, resztę spłacasz w ratach 0%. Darmowy PDF: jak to zrobiłem przy licencji pilota.">
+<meta property="og:title" content="Jak ogarnąć kasę z Unii na wymarzony kurs">
+<meta property="og:description" content="Darmowy PDF: do 75 000 zł na kurs, 25–50% pokrywa program, reszta w ratach 0%.">
+<meta property="og:image" content="https://ciesliixw.github.io/horyzont/assets/img/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#02070a">
+<link rel="preload" href="assets/fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="kadr">
+    <img src="assets/img/kokpit.jpg" alt="Wojciech w kokpicie samolotu nad miastem" width="1488" height="1304" fetchpriority="high">
+    <div class="kadr-gora"><span class="ety">Darmowy PDF · 9 stron</span><span class="ety">@wojtekcieslik_</span></div>
+    <div class="kadr-tresc">
+      <h1 class="anton">Jak ogarnąć kasę z&nbsp;Unii na wymarzony kurs</h1>
+      <p class="pod">I jak sam zrobiłem to przy licencji pilota.</p>
+    </div>
+  </div>
+
+  <section class="panel" id="formularz" aria-labelledby="formularz-tytul">
+    <div class="panel-in">
+      <div id="przed">
+        <h2 class="kwota" id="formularz-tytul"><b>75 000 ZŁ</b><span class="ety">na kurs, który i tak chcesz zrobić</span></h2>
+        <p class="lead">Jak je dostać, rozpisałem w PDF-ie. Podaj imię i adres, a przyjdzie na maila jako załącznik.</p>
+
+        <form class="formularz" id="zapis" data-material="kasa-na-kurs" novalidate>
+          <div class="pole">
+            <label for="imie">Imię</label>
+            <input id="imie" name="imie" type="text" autocomplete="given-name" maxlength="60" required placeholder="Jak się do ciebie zwracać">
+          </div>
+          <div class="pole">
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required placeholder="ty@przyklad.pl">
+          </div>
+          <div class="pulapka" aria-hidden="true">
+            <label for="strona_www">Nie wypełniaj</label>
+            <input id="strona_www" name="strona_www" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <!-- Treść zgód 1:1 z ZGODY.v1 w supabase/functions/zapis/index.ts -->
+          <label class="zgoda">
+            <input type="checkbox" name="regulamin" required>
+            <span>Akceptuję <a href="regulamin.html" target="_blank">Regulamin</a> i <a href="prywatnosc.html" target="_blank">Politykę prywatności</a>. Chcę dostać PDF na podany adres e-mail.</span>
+          </label>
+          <label class="zgoda">
+            <input type="checkbox" name="marketing">
+            <span>Chcę dostawać od Wojciecha maile z materiałami i ofertami jego programów. Zgodę mogę wycofać w każdej chwili. <span class="opc">(opcjonalnie)</span></span>
+          </label>
+          <div id="captcha"></div>
+          <button class="przycisk" type="submit">Wyślij mi PDF</button>
+          <p class="komunikat" id="komunikat" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="sukces" id="po" hidden tabindex="-1">
+        <h2 class="anton">PDF jest <em>w drodze</em></h2>
+        <p>Wysłałem go na <strong id="po-email"></strong>. Zajrzyj do skrzynki za minutę.</p>
+        <p class="drobny">Nie widzisz? Sprawdź spam i zakładkę Oferty. Dalej nic – napisz na IG <a href="https://www.instagram.com/wojtekcieslik_/">@wojtekcieslik_</a>.</p>
+      </div>
+    </div>
+  </section>
+</header>
+
+<main>
+  <section class="jasna">
+    <div class="wewn">
+      <span class="ety">Co jest w PDF-ie</span>
+      <h2 class="anton">Kurs za kasę z programu, nie z oszczędności</h2>
+      <div class="fakty">
+        <div><b class="akcent">25–50%</b><div class="kreska"></div><p>kosztu kursu pokrywa program po jego ukończeniu. <span>Zależnie od kursu i dochodu.</span></p></div>
+        <div><b>0%</b><div class="kreska"></div><p>Resztę spłacasz w ratach bez odsetek i prowizji. <span>Maksymalnie przez 36 miesięcy.</span></p></div>
+        <div><b>0 ZŁ</b><div class="kreska"></div><p>na start. Program płaci szkole z góry. <span>Nie musisz mieć odłożonej kasy.</span></p></div>
+      </div>
+
+      <ol class="rozdzialy">
+        <li><span class="nr">01</span><span class="naz">3 razy odbili mi wniosek</span><span class="op">Skąd ten PDF i czego się nauczyłem.</span></li>
+        <li><span class="nr">02</span><span class="naz">Jak to działa</span><span class="op">Kto płaci, ile oddajesz i kiedy.</span></li>
+        <li><span class="nr">03</span><span class="naz">Kto może skorzystać</span><span class="op">Etat, firma, przerwa w pracy. I dwa haczyki.</span></li>
+        <li><span class="nr">04</span><span class="naz">Ile możesz odzyskać</span><span class="op">Tabela: kurs za 10, 30 i 75 tys. zł.</span></li>
+        <li><span class="nr">05</span><span class="naz">Jak dobić do 35–50%</span><span class="op">Obszary strategiczne i próg dochodu.</span></li>
+        <li><span class="nr">06</span><span class="naz">5 rzeczy, które cię wywalą</span><span class="op">Na tym odpadają wnioski. Mój też.</span></li>
+        <li><span class="nr">07</span><span class="naz">Od kursu do umorzenia</span><span class="op">Cały proces w 5 krokach.</span></li>
+      </ol>
+
+      <div class="cta"><a class="przycisk" href="#formularz">Chcę ten PDF</a><span>Za darmo. Przyjdzie na maila.</span></div>
+    </div>
+  </section>
+
+  <section class="historia">
+    <div class="wewn">
+      <figure><img src="assets/img/portret.jpg" alt="Wojciech" width="675" height="1200" loading="lazy"></figure>
+      <div>
+        <span class="ety">U mnie</span>
+        <h2 class="anton">Licencja pilota za 45 000 zł</h2>
+        <div class="liczba">11 250 ZŁ</div>
+        <div class="liczba-pod">pokrył program</div>
+        <div class="txt">
+          <p>Zamiast wykładać wszystko z góry, rozłożyłem licencję na 36 rat po 1 250 zł. Program pokrywa 9 z nich, ja spłacam 27.</p>
+          <p>Na papierze proste. W praktyce wniosek wracał trzy razy, za każdym razem o coś innego. W PDF-ie masz to, co sam chciałbym wiedzieć na starcie.</p>
+        </div>
+        <a class="przycisk" href="#formularz">Wyślij mi PDF</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="stopka">
+  <div class="wewn">
+    <nav aria-label="Stopka">
+      <a href="regulamin.html">Regulamin</a>
+      <a href="prywatnosc.html">Polityka prywatności</a>
+      <a href="https://www.instagram.com/wojtekcieslik_/">Instagram @wojtekcieslik_</a>
+    </nav>
+    <p class="zastrzezenie">Nie jestem doradcą finansowym ani pośrednikiem kredytowym. Opisuję program na podstawie własnego doświadczenia i publicznych informacji BGK i operatorów. Szczegóły różnią się między operatorami, wiążący jest zawsze regulamin twojego. Stan na listopad 2026.</p>
+    <p>© 2026 Wojciech Cieślik</p>
+  </div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/app.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=captchaGotowa" async defer></script>
+</body>
+</html>

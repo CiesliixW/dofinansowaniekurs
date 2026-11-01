@@ -1,4 +1,4 @@
-# Horyzont – landingi
+# dofinansowaniekurs – landingi marki Horyzont
 
 Statyczne strony na GitHub Pages + Supabase (baza, plik PDF, funkcja wysyłająca maila).
 

@@ -169,10 +169,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 .program-in { position: relative; padding-top: 120px; padding-bottom: clamp(40px, 8vh, 80px); }
 .powrot { position: absolute; top: 28px; color: rgba(241, 245, 248, .86); text-decoration: none; }
 .program h1 { font-size: clamp(48px, 8vw, 112px); line-height: .95; max-width: 12ch; }
-.program .pod { margin-top: 18px; max-width: 56ch; font-size: clamp(16px, 1.5vw, 19px); color: rgba(241, 245, 248, .92); }
-.trzy { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 12px; }
-.trzy li { display: grid; grid-template-columns: 44px 1fr; align-items: baseline; font-size: clamp(17px, 1.6vw, 20px); }
-.trzy .anton { font-size: 32px; color: var(--kantalupa); }
+.program .pod { margin-top: 16px; max-width: 56ch; font-size: clamp(16px, 1.5vw, 19px); color: rgba(241, 245, 248, .92); }
 .przyciski { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 .przyciski .przycisk { padding: 16px 32px; }
 .przycisk.drugi { background: transparent; color: var(--chmura); box-shadow: inset 0 0 0 1.5px rgba(241, 245, 248, .5); }
